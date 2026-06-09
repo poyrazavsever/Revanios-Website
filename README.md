@@ -1,30 +1,44 @@
-# Neta - Freelance Management Platform
+<p align="center">
+  <img src="public/logo/lightLogoLong.png" height="140" alt="Neta Logo" />
+</p>
 
-Neta, freelancer'ların kendi sunucularına kurarak (self-hosted) tüm süreçlerini yönetebileceği kapsamlı bir proje ve görev yönetim platformudur.
+# Neta Website
 
-## Özellikler
+Neta Website, **Neta - Freelancer Operating System** uygulamasının resmi web sitesidir. Bu repo, self-hosted freelancer çalışma alanını anlatan landing page'i, ürün modüllerini, müşteri portalını, AI asistanı ve kurulum akışını tanıtır.
 
-- **Kişisel Yönetim:** Side project, görev (task) ve günlük mod (mood) takibi.
-- **Müşteri Portalı:** Müşterileriniz sisteme dahil olabilir, projelerinin aktif durumunu takip edip revizyon gönderebilir.
-- **Poyraz UI:** Modern, karanlık mod uyumlu, temiz ve gölgesiz arayüz bileşenleri ile geliştirildi.
+## Amaç
 
-## Kurulum ve Çalıştırma
+Neta; freelancer'ların side project'lerinden müşteri projelerine, görevlerinden günlük modlarına kadar tüm operasyonlarını kendi sunucularında yönetebilmesi için tasarlanan self-hosted bir çalışma alanıdır.
 
-Bu proje [Next.js](https://nextjs.org/) kullanılarak oluşturulmuştur.
+Bu web sitesi şunları anlatır:
 
-Geliştirme sunucusunu başlatmak için:
+- Freelancer operasyon modülleri
+- Müşteri portalı ve revizyon akışı
+- Veritabanı bağlamıyla çalışan AI asistan
+- Docker ve Supabase ile self-host kurulum
+
+## Teknoloji
+
+- Next.js App Router
+- React
+- Tailwind CSS v4
+- Poyraz UI
+- Iconify
+
+## Geliştirme
 
 ```bash
-npm run dev
-# veya
-yarn dev
-# veya
+pnpm install
 pnpm dev
-# veya
-bun dev
 ```
 
-Ardından tarayıcınızdan [http://localhost:3000](http://localhost:3000) adresine giderek uygulamayı görüntüleyebilirsiniz.
+Varsayılan geliştirme adresi:
 
-## GitHub Reposu
-- [neta-website](https://github.com/poyrazavsever/neta-website)
+```bash
+http://localhost:3000
+```
+
+## Repo
+
+- Website: https://github.com/poyrazavsever/neta-website
+- App: https://github.com/poyrazavsever/neta
