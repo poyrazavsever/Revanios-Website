@@ -1,10 +1,9 @@
 export const NAV_LINKS = [
-  { id: "about", label: "Hakkımda", href: "/about" },
-  { id: "blog", label: "Blog", href: "/blog" },
-  { id: "content", label: "İçerikler", href: "/content" },
-  { id: "projects", label: "Projeler", href: "/projects" },
-  { id: "gallery", label: "Galeri", href: "/gallery" },
-  { id: "contact", label: "İletişim", href: "/contact" },
+  { id: "overview", label: "Genel Bakış", href: "#overview" },
+  { id: "modules", label: "Modüller", href: "#modules" },
+  { id: "client-portal", label: "Müşteri Portalı", href: "#client-portal" },
+  { id: "ai-assistant", label: "AI Asistan", href: "#ai-assistant" },
+  { id: "self-host", label: "Self-Host", href: "#self-host" },
 ] as const;
 
 export const SOCIAL_LINKS = [
@@ -23,7 +22,7 @@ export const SOCIAL_LINKS = [
   {
     id: "github",
     label: "GitHub",
-    href: "https://github.com/poyrazavsever",
+    href: "https://github.com/poyrazavsever/neta-website",
     icon: "mdi:github",
   },
   {
@@ -69,5 +68,4 @@ export const SOCIAL_LINKS = [
     icon: "mdi:coffee",
   },
 ] as const;
-
 

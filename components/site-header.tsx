@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { Button } from "poyraz-ui/atoms";
 import { NAV_LINKS } from "@/config/links";
+
+const GITHUB_URL = "https://github.com/poyrazavsever/neta";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,12 +20,15 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      window.history.pushState(null, "", window.location.pathname);
+      window.history.pushState(null, "", `#${id}`);
     }
   };
 
@@ -34,20 +40,16 @@ export function SiteHeader() {
           : "bg-background border-transparent"
       }`}
     >
-      {/* Main Navbar */}
       <div className="container max-w-5xl mx-auto px-4 h-12 mt-2 mb-4 flex items-end justify-between">
-        
-        {/* Left: Logo & Links */}
         <div className="flex items-end gap-8">
-          {/* Logo */}
           <div className="flex shrink-0 items-center">
-            <a href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <img
                 src="/logo/blackLogoLong.png"
                 alt="Neta Logo"
                 className="h-12 w-auto object-contain"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Center Navigation */}
@@ -68,7 +70,7 @@ export function SiteHeader() {
         {/* Right Actions */}
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href="https://github.com/poyrazavsever/neta"
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -78,8 +80,13 @@ export function SiteHeader() {
             <span className="sr-only">GitHub</span>
           </a>
 
-          <Button size="sm" className="hidden sm:flex h-9">
-            Hemen Başla
+          <Button size="sm" className="hidden sm:flex h-9" asChild>
+            <a
+              href="#self-host"
+              onClick={(e) => scrollToSection(e, "self-host")}
+            >
+              Kuruluma Geç
+            </a>
           </Button>
         </div>
       </div>
