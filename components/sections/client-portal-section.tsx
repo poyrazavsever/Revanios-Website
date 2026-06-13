@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Typography } from "poyraz-ui/atoms";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 const PORTAL_SCREENS = [
   {
@@ -28,15 +29,19 @@ const POSITIONS = [
     image: "scale-100",
   },
   {
-    wrapper:
-      "right-0 top-5 w-[58%] translate-x-0 translate-y-0",
+    wrapper: "right-0 top-5 w-[58%] translate-x-0 translate-y-0",
     image: "scale-95",
   },
   {
-    wrapper:
-      "left-0 bottom-5 w-[58%] translate-x-0 translate-y-0",
+    wrapper: "left-0 bottom-5 w-[58%] translate-x-0 translate-y-0",
     image: "scale-95",
   },
+] as const;
+
+const PORTAL_POINTS = [
+  "Proje ilerlemesi sade ve anlaşılır görünür.",
+  "Revizyon istekleri proje bağlamında toplanır.",
+  "Portal, müşteriye kontrollü bir okuma alanı sunar.",
 ] as const;
 
 export function ClientPortalSection() {
@@ -51,13 +56,10 @@ export function ClientPortalSection() {
   }, []);
 
   return (
-    <section
-      id="client-portal"
-      className="px-4 py-16 sm:py-20"
-    >
+    <section id="client-portal" className="px-4 py-16 sm:py-20">
       <div className="container mx-auto max-w-5xl">
         <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-          <div className="max-w-xl space-y-5">
+          <ScrollReveal className="max-w-xl space-y-5" x={-24} parallaxY={10}>
             <div className="space-y-3">
               <Typography variant="h2" component="h2" className="text-3xl">
                 Müşteriye ayrı, kontrollü bir{" "}
@@ -71,24 +73,29 @@ export function ClientPortalSection() {
             </div>
 
             <div className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-3 lg:grid-cols-1">
-              <div className="rounded-sm border border-border bg-card p-3">
-                Proje ilerlemesi sade ve anlaşılır görünür.
-              </div>
-              <div className="rounded-sm border border-border bg-card p-3">
-                Revizyon istekleri proje bağlamında toplanır.
-              </div>
-              <div className="rounded-sm border border-border bg-card p-3">
-                Portal, müşteriye kontrollü bir okuma alanı sunar.
-              </div>
+              {PORTAL_POINTS.map((item, index) => (
+                <ScrollReveal key={item} delay={120 + index * 90} x={-18} y={18}>
+                  <div className="rounded-sm border border-border bg-card p-3">
+                    {item}
+                  </div>
+                </ScrollReveal>
+              ))}
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="relative min-h-[320px] sm:min-h-[420px]">
+          <ScrollReveal
+            className="relative min-h-[320px] sm:min-h-[420px]"
+            delay={120}
+            x={24}
+            y={26}
+            parallaxY={16}
+          >
             <div className="absolute inset-0 rounded-sm border border-border bg-muted/40" />
             <div className="absolute inset-4 overflow-hidden rounded-sm border border-border bg-card">
               {PORTAL_SCREENS.map((screen, index) => {
                 const isActive = index === activeIndex;
                 const position = POSITIONS[index];
+
                 return (
                   <div
                     key={screen.title}
@@ -105,7 +112,7 @@ export function ClientPortalSection() {
                 );
               })}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

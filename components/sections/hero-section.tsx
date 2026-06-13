@@ -4,6 +4,7 @@ import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Badge, Card, CardContent, Typography } from "poyraz-ui/atoms";
 import { AnimatedButton } from "@/components/ui/animated-button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 const GITHUB_URL = "https://github.com/poyrazavsever/neta";
 
@@ -209,8 +210,11 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-72 bg-linear-to-t from-primary/6 to-transparent" />
 
       <div className="container relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-        <div
-          className={`mt-5 max-w-5xl transition-all delay-100 duration-700 ${introClass}`}
+        <ScrollReveal
+          className="mt-5 max-w-5xl"
+          delay={100}
+          y={20}
+          parallaxY={10}
         >
           <Typography
             variant="h1"
@@ -222,20 +226,29 @@ export function HeroSection() {
             <span className="font-display text-primary">tek ve net</span>{" "}
             bir merkezde topla.
           </Typography>
-        </div>
+        </ScrollReveal>
 
-        <Typography
-          variant="lead"
-          className={`mt-5 max-w-3xl text-base leading-7 text-muted-foreground transition-all delay-200 duration-700 sm:text-xl ${introClass}`}
+        <ScrollReveal
+          className="mt-5 max-w-3xl"
+          delay={180}
+          y={18}
+          parallaxY={8}
         >
-          Neta; projelerden müşterilere, finanstan günlük performansına ve AI
-          desteğine kadar her şeyi tek bir{" "}
-          <span className="font-medium text-primary">self-hosted</span> çalışma
-          alanında birleştirir.
-        </Typography>
+          <Typography
+            variant="lead"
+            className="text-base leading-7 text-muted-foreground sm:text-xl"
+          >
+            Neta; projelerden müşterilere, finanstan günlük performansına ve AI
+            desteğine kadar her şeyi tek bir{" "}
+            <span className="font-medium text-primary">self-hosted</span>{" "}
+            çalışma alanında birleştirir.
+          </Typography>
+        </ScrollReveal>
 
-        <div
-          className={`mt-7 flex flex-col items-center justify-center gap-3 transition-all delay-300 duration-700 sm:flex-row ${introClass}`}
+        <ScrollReveal
+          className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          delay={260}
+          y={16}
         >
           <AnimatedButton
             href="#modules"
@@ -256,9 +269,14 @@ export function HeroSection() {
           >
             GitHub&apos;da İncele
           </AnimatedButton>
-        </div>
+        </ScrollReveal>
 
-        <div className="relative z-0 mt-24 w-full sm:mt-40 lg:mt-48">
+        <ScrollReveal
+          className="relative z-0 mt-24 w-full sm:mt-40 lg:mt-48"
+          delay={320}
+          y={34}
+          parallaxY={12}
+        >
           <div className="pointer-events-none absolute inset-x-[8%] bottom-0 h-[72%] rounded-t-[999px] border border-primary/10 bg-primary/5 blur-[1px]" />
           <div className="pointer-events-none absolute left-[6%] top-[10%] hidden h-28 w-28 rounded-full border border-dashed border-primary/25 sm:block" />
           <div className="pointer-events-none absolute right-[5%] top-[10%] hidden h-36 w-36 rounded-full border border-dashed border-primary/25 lg:block" />
@@ -319,7 +337,7 @@ export function HeroSection() {
               style={{ transform: parallax.rightBottom }}
             />
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
