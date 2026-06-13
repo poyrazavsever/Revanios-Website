@@ -6,7 +6,7 @@ import { Typography } from "poyraz-ui/atoms";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
 const GITHUB_URL = "https://github.com/poyrazavsever/neta";
-const DOCS_URL = "https://docs.takeneta.com";
+const DOCS_URL = "/docs";
 const MAKER_URL = "https://poyrazavsever.com";
 
 const FOOTER_LINKS = [
@@ -79,8 +79,6 @@ export function SiteFooter() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <AnimatedButton
                   href={DOCS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   variant="outline"
                   icon="mdi:file-document-outline"
                   iconPosition="left"

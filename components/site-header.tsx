@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
@@ -39,13 +40,14 @@ const HEADER_LINKS = [
   {
     id: "docs",
     label: "Docs",
-    href: GITHUB_URL,
+    href: "/docs",
     accent: false,
-    external: true,
+    external: false,
   },
 ] as const;
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
@@ -108,7 +110,10 @@ export function SiteHeader() {
     if (element) {
       setActiveSection(id);
       element.scrollIntoView({ behavior: "smooth" });
+      return;
     }
+
+    window.location.assign(`/#${id}`);
   };
 
   const scrollMobileToSection = (
@@ -156,7 +161,10 @@ export function SiteHeader() {
 
             <nav className="hidden items-center justify-center gap-1.5 xl:flex">
               {HEADER_LINKS.map((item) => {
-                const isActive = !item.external && activeSection === item.id;
+                const isPageLink = item.href.startsWith("/");
+                const isActive = isPageLink
+                  ? pathname.startsWith(item.href)
+                  : activeSection === item.id;
                 const className = isActive
                   ? "relative bg-primary/8 text-primary shadow-[inset_0_0_0_1px_rgba(220,38,38,0.08)]"
                   : "text-foreground hover:bg-accent/70";
@@ -172,6 +180,18 @@ export function SiteHeader() {
                     ) : null}
                   </>
                 );
+
+                if (isPageLink) {
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className={`inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${className}`}
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
 
                 if (item.external) {
                   return (
@@ -271,10 +291,27 @@ export function SiteHeader() {
 
             <nav className="mt-12 grid gap-2">
               {HEADER_LINKS.map((item) => {
-                const isActive = !item.external && activeSection === item.id;
+                const isPageLink = item.href.startsWith("/");
+                const isActive = isPageLink
+                  ? pathname.startsWith(item.href)
+                  : activeSection === item.id;
                 const className = isActive
                   ? "border-primary/15 bg-primary/8 text-primary"
                   : "border-border/70 bg-card text-foreground";
+
+                if (isPageLink) {
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex min-h-16 items-center justify-between rounded-2xl border px-5 text-lg font-semibold transition-colors hover:bg-accent ${className}`}
+                    >
+                      <span>{item.label}</span>
+                      <Icon icon="mdi:chevron-right" className="h-5 w-5" />
+                    </Link>
+                  );
+                }
 
                 if (item.external) {
                   return (

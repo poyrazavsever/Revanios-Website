@@ -5,7 +5,7 @@ import { Badge, Card, CardContent, Typography } from "poyraz-ui/atoms";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
-const DOCS_URL = "https://docs.takeneta.com";
+const DOCS_URL = "/docs";
 
 type SelfHostFlowItem = {
   title: string;
@@ -172,8 +172,6 @@ export function SelfHostSection() {
         >
           <AnimatedButton
             href={DOCS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             icon="mdi:arrow-top-right"
             iconPosition="right"
             variant="outline"
