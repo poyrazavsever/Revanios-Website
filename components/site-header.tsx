@@ -3,20 +3,83 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { Button } from "poyraz-ui/atoms";
-import { NAV_LINKS } from "@/config/links";
+import { AnimatedButton } from "@/components/ui/animated-button";
 
 const GITHUB_URL = "https://github.com/poyrazavsever/neta";
 
+const HEADER_LINKS = [
+  {
+    id: "client-portal",
+    label: "Features",
+    href: "#client-portal",
+    active: false,
+    accent: false,
+    external: false,
+  },
+  {
+    id: "modules",
+    label: "Modules",
+    href: "#modules",
+    active: false,
+    accent: false,
+    external: false,
+  },
+  {
+    id: "self-host",
+    label: "Self-hosted",
+    href: "#self-host",
+    active: true,
+    accent: false,
+    external: false,
+  },
+  {
+    id: "ai-assistant",
+    label: "AI Assistant",
+    href: "#ai-assistant",
+    active: false,
+    accent: true,
+    external: false,
+  },
+  {
+    id: "docs",
+    label: "Docs",
+    href: GITHUB_URL,
+    active: false,
+    accent: false,
+    external: true,
+  },
+] as const;
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const scrollToSection = (
@@ -30,68 +93,228 @@ export function SiteHeader() {
     }
   };
 
+  const scrollMobileToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    scrollToSection(e, id);
+    setMobileMenuOpen(false);
+  };
+
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.history.pushState(null, "", window.location.pathname);
+    setMobileMenuOpen(false);
   };
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-md border-border"
-          : "bg-background border-transparent"
+      className={`fixed left-0 top-0 z-50 w-full px-3 pt-2 transition-all duration-300 sm:px-6 ${
+        scrolled ? "translate-y-0" : ""
       }`}
     >
-      <div className="container max-w-5xl mx-auto px-4 h-12 mt-2 mb-4 flex items-end justify-between">
-        <div className="flex items-end gap-8">
-          <div className="flex shrink-0 items-center">
-            <Link href="/" onClick={scrollToTop} className="flex items-center gap-2">
+      <div className="mx-auto max-w-[94rem]">
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-x-4 top-3 h-16 rounded-full bg-primary/10 blur-2xl" />
+
+          <div
+            className={`relative z-10 flex min-h-16 items-center justify-between gap-4 rounded-[2rem] border bg-background/95 px-4 py-3 shadow-[0_18px_56px_rgba(16,24,40,0.12),0_0_0_7px_rgba(255,255,255,0.7)] backdrop-blur-xl transition-all duration-300 sm:min-h-18 sm:px-6 lg:px-10 ${
+              scrolled ? "border-border/90" : "border-border/70"
+            }`}
+          >
+            <Link
+              href="/"
+              onClick={scrollToTop}
+              className="flex min-w-0 shrink-0 items-center"
+              aria-label="Neta ana sayfa"
+            >
               <img
                 src="/logo/blackLogoLong.png"
-                alt="Neta Logo"
-                className="h-12 w-auto object-contain"
+                alt="Neta"
+                className="h-10 w-auto object-contain sm:h-12"
               />
             </Link>
+
+            <nav className="hidden items-center justify-center gap-2 xl:flex">
+              {HEADER_LINKS.map((item) => {
+                const className = item.active
+                  ? "relative bg-primary/8 text-primary shadow-[inset_0_0_0_1px_rgba(220,38,38,0.08)]"
+                  : "text-foreground hover:bg-accent/70";
+
+                const content = (
+                  <>
+                    <span>{item.label}</span>
+                    {item.accent ? (
+                      <Icon icon="mdi:sparkles" className="h-4 w-4 text-primary" />
+                    ) : null}
+                    {item.active ? (
+                      <span className="absolute -bottom-3 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary" />
+                    ) : null}
+                  </>
+                );
+
+                if (item.external) {
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex h-10 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors ${className}`}
+                    >
+                      {content}
+                    </a>
+                  );
+                }
+
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={(e) => scrollToSection(e, item.id)}
+                    className={`inline-flex h-10 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors ${className}`}
+                  >
+                    {content}
+                  </a>
+                );
+              })}
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-3">
+              <div className="hidden items-center gap-3 xl:flex">
+                <AnimatedButton
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  icon="mdi:github"
+                  iconPosition="left"
+                >
+                  View on GitHub
+                </AnimatedButton>
+
+                <AnimatedButton
+                  href="#self-host"
+                  onClick={(e) => scrollToSection(e, "self-host")}
+                  icon="mdi:chevron-right"
+                  iconPosition="right"
+                  className="px-6"
+                >
+                  Get Early Access
+                </AnimatedButton>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(true)}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-background text-foreground transition-colors hover:bg-accent xl:hidden"
+                aria-label="Menüyü aç"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                <Icon icon="mdi:menu" className="h-6 w-6" />
+              </button>
+            </div>
           </div>
 
-          {/* Center Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            {NAV_LINKS.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                onClick={(e) => scrollToSection(e, item.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-3 shrink-0">
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-            title="GitHub"
+          <div
+            id="mobile-menu"
+            className={`fixed inset-0 z-50 flex min-h-dvh flex-col bg-background px-5 py-5 shadow-[24px_0_80px_rgba(16,24,40,0.18)] transition-transform duration-500 [transition-timing-function:cubic-bezier(.22,1,.36,1)] xl:hidden ${
+              mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+            aria-hidden={!mobileMenuOpen}
           >
-            <Icon icon="mdi:github" className="h-5 w-5" />
-            <span className="sr-only">GitHub</span>
-          </a>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/"
+                onClick={scrollToTop}
+                className="flex items-center"
+                aria-label="Neta ana sayfa"
+              >
+                <img
+                  src="/logo/blackLogoLong.png"
+                  alt="Neta"
+                  className="h-11 w-auto object-contain"
+                />
+              </Link>
 
-          <Button size="sm" className="hidden sm:flex h-9" asChild>
-            <a
-              href="#self-host"
-              onClick={(e) => scrollToSection(e, "self-host")}
-            >
-              Kuruluma Geç
-            </a>
-          </Button>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-background text-foreground transition-colors hover:bg-accent"
+                aria-label="Menüyü kapat"
+              >
+                <Icon icon="mdi:close" className="h-6 w-6" />
+              </button>
+            </div>
+
+            <nav className="mt-12 grid gap-2">
+              {HEADER_LINKS.map((item) => {
+                const className = item.active
+                  ? "border-primary/15 bg-primary/8 text-primary"
+                  : "border-border/70 bg-card text-foreground";
+
+                if (item.external) {
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex min-h-16 items-center justify-between rounded-2xl border px-5 text-lg font-semibold transition-colors hover:bg-accent ${className}`}
+                    >
+                      <span>{item.label}</span>
+                      <Icon icon="mdi:arrow-top-right" className="h-5 w-5" />
+                    </a>
+                  );
+                }
+
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={(e) => scrollMobileToSection(e, item.id)}
+                    className={`flex min-h-16 items-center justify-between rounded-2xl border px-5 text-lg font-semibold transition-colors hover:bg-accent ${className}`}
+                  >
+                    <span className="flex items-center gap-2">
+                      {item.label}
+                      {item.accent ? (
+                        <Icon icon="mdi:sparkles" className="h-4 w-4 text-primary" />
+                      ) : null}
+                    </span>
+                    <Icon icon="mdi:chevron-right" className="h-5 w-5" />
+                  </a>
+                );
+              })}
+            </nav>
+
+            <div className="mt-auto grid gap-3 pb-2">
+              <AnimatedButton
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                variant="outline"
+                icon="mdi:github"
+                iconPosition="left"
+                className="w-full"
+              >
+                View on GitHub
+              </AnimatedButton>
+
+              <AnimatedButton
+                href="#self-host"
+                onClick={(e) => scrollMobileToSection(e, "self-host")}
+                icon="mdi:chevron-right"
+                iconPosition="right"
+                className="w-full"
+              >
+                Get Early Access
+              </AnimatedButton>
+            </div>
+          </div>
         </div>
       </div>
     </header>
