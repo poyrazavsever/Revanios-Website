@@ -22,7 +22,14 @@ export function SiteFooter() {
     id: string,
   ) => {
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    window.location.assign(`/#${id}`);
   };
 
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
