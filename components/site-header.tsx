@@ -142,7 +142,7 @@ export function SiteHeader() {
           <div className="pointer-events-none absolute inset-x-4 top-3 h-16 rounded-full bg-primary/10 blur-2xl" />
 
           <div
-            className={`relative z-10 flex min-h-16 items-center justify-between gap-4 rounded-[2rem] border bg-background/95 px-4 py-3 shadow-[0_18px_56px_rgba(16,24,40,0.12),0_0_0_7px_rgba(255,255,255,0.7)] backdrop-blur-xl transition-all duration-300 sm:min-h-18 sm:px-6 lg:px-8 ${
+            className={`relative z-10 flex min-h-16 items-center justify-between gap-4 rounded-4xl border bg-background/95 px-4 py-3 shadow-[0_18px_56px_rgba(16,24,40,0.12),0_0_0_7px_rgba(255,255,255,0.7)] backdrop-blur-xl transition-all duration-300 sm:min-h-18 sm:px-6 lg:px-8 ${
               scrolled ? "border-border/90" : "border-border/70"
             }`}
           >
@@ -229,19 +229,20 @@ export function SiteHeader() {
                   variant="outline"
                   icon="mdi:github"
                   iconPosition="left"
-                  className="h-10 rounded-[1rem] px-4 text-sm"
+                  className="h-10 rounded-2xl px-4 text-sm"
                 >
-                  View on GitHub
+                  GitHub'da İncele
                 </AnimatedButton>
 
                 <AnimatedButton
-                  href="#self-host"
-                  onClick={(e) => scrollToSection(e, "self-host")}
+                  href="https://demo.takeneta.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   icon="mdi:chevron-right"
                   iconPosition="right"
-                  className="h-10 rounded-[1rem] px-4 text-sm"
+                  className="h-10 rounded-2xl px-4 text-sm"
                 >
-                  Get Early Access
+                  Demo'yu Gör
                 </AnimatedButton>
               </div>
 
@@ -260,7 +261,7 @@ export function SiteHeader() {
 
           <div
             id="mobile-menu"
-            className={`fixed inset-0 z-50 flex min-h-dvh flex-col bg-background px-5 py-5 shadow-[24px_0_80px_rgba(16,24,40,0.18)] transition-transform duration-500 [transition-timing-function:cubic-bezier(.22,1,.36,1)] xl:hidden ${
+            className={`fixed inset-0 z-50 flex min-h-dvh flex-col bg-background px-5 py-5 shadow-[24px_0_80px_rgba(16,24,40,0.18)] transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] xl:hidden ${
               mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
             aria-hidden={!mobileMenuOpen}

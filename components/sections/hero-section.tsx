@@ -251,7 +251,9 @@ export function HeroSection() {
           y={16}
         >
           <AnimatedButton
-            href="#modules"
+            href="https://demo.takeneta.com"
+            target="_blank"
+            rel="noopener noreferrer"
             icon="mdi:chevron-right"
             iconPosition="right"
             className="min-w-44"
