@@ -11,35 +11,35 @@ const GITHUB_URL = "https://github.com/poyrazavsever/neta";
 const HEADER_LINKS = [
   {
     id: "modules",
-    label: "Modules",
-    href: "#modules",
+    label: "Modüller",
+    href: "/#modules",
     accent: false,
     external: false,
   },
   {
     id: "client-portal",
-    label: "Features",
-    href: "#client-portal",
+    label: "Özellikler",
+    href: "/#client-portal",
     accent: false,
     external: false,
   },
   {
     id: "ai-assistant",
-    label: "AI Assistant",
-    href: "#ai-assistant",
+    label: "AI Asistanı",
+    href: "/#ai-assistant",
     accent: true,
     external: false,
   },
   {
     id: "self-host",
-    label: "Self-hosted",
-    href: "#self-host",
+    label: "Self-Host",
+    href: "/#self-host",
     accent: false,
     external: false,
   },
   {
     id: "docs",
-    label: "Docs",
+    label: "Dökümantasyon",
     href: "/docs",
     accent: false,
     external: false,
@@ -105,6 +105,10 @@ export function SiteHeader() {
     e: React.MouseEvent<HTMLAnchorElement>,
     id: string,
   ) => {
+    if (pathname !== "/") {
+      return;
+    }
+
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
@@ -125,6 +129,11 @@ export function SiteHeader() {
   };
 
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== "/") {
+      setMobileMenuOpen(false);
+      return;
+    }
+
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.history.pushState(null, "", window.location.pathname);
@@ -161,7 +170,8 @@ export function SiteHeader() {
 
             <nav className="hidden items-center justify-center gap-1.5 xl:flex">
               {HEADER_LINKS.map((item) => {
-                const isPageLink = item.href.startsWith("/");
+                const isPageLink =
+                  item.href.startsWith("/") && !item.href.startsWith("/#");
                 const isActive = isPageLink
                   ? pathname.startsWith(item.href)
                   : activeSection === item.id;
@@ -292,7 +302,8 @@ export function SiteHeader() {
 
             <nav className="mt-12 grid gap-2">
               {HEADER_LINKS.map((item) => {
-                const isPageLink = item.href.startsWith("/");
+                const isPageLink =
+                  item.href.startsWith("/") && !item.href.startsWith("/#");
                 const isActive = isPageLink
                   ? pathname.startsWith(item.href)
                   : activeSection === item.id;
@@ -364,7 +375,7 @@ export function SiteHeader() {
               </AnimatedButton>
 
               <AnimatedButton
-                href="#self-host"
+                href="/#self-host"
                 onClick={(e) => scrollMobileToSection(e, "self-host")}
                 icon="mdi:chevron-right"
                 iconPosition="right"

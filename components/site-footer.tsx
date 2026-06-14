@@ -10,10 +10,10 @@ const DOCS_URL = "/docs";
 const MAKER_URL = "https://poyrazavsever.com";
 
 const FOOTER_LINKS = [
-  { id: "modules", label: "Modules", href: "#modules" },
-  { id: "client-portal", label: "Features", href: "#client-portal" },
-  { id: "ai-assistant", label: "AI Assistant", href: "#ai-assistant" },
-  { id: "self-host", label: "Self-hosted", href: "#self-host" },
+  { id: "modules", label: "Modules", href: "/#modules" },
+  { id: "client-portal", label: "Features", href: "/#client-portal" },
+  { id: "ai-assistant", label: "AI Assistant", href: "/#ai-assistant" },
+  { id: "self-host", label: "Self-hosted", href: "/#self-host" },
 ] as const;
 
 export function SiteFooter() {
@@ -21,6 +21,10 @@ export function SiteFooter() {
     e: React.MouseEvent<HTMLAnchorElement>,
     id: string,
   ) => {
+    if (window.location.pathname !== "/") {
+      return;
+    }
+
     e.preventDefault();
     const element = document.getElementById(id);
 
@@ -33,6 +37,10 @@ export function SiteFooter() {
   };
 
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname !== "/") {
+      return;
+    }
+
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.history.pushState(null, "", window.location.pathname);

@@ -1,8 +1,8 @@
 export const NAV_LINKS = [
-  { id: "modules", label: "Modüller", href: "#modules" },
-  { id: "client-portal", label: "Müşteri Portalı", href: "#client-portal" },
-  { id: "ai-assistant", label: "AI Asistan", href: "#ai-assistant" },
-  { id: "self-host", label: "Self-Host", href: "#self-host" },
+  { id: "modules", label: "Modüller", href: "/#modules" },
+  { id: "client-portal", label: "Müşteri Portalı", href: "/#client-portal" },
+  { id: "ai-assistant", label: "AI Asistan", href: "/#ai-assistant" },
+  { id: "self-host", label: "Self-Host", href: "/#self-host" },
 ] as const;
 
 export const SOCIAL_LINKS = [
